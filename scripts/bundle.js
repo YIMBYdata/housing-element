@@ -7184,6 +7184,7 @@ function populateIncomeHistogramForCity(cityArr) {
     const ctx = canvas.getContext('2d');
 
 
+    console.log([cityArr.fields[vli], cityArr.fields[li], cityArr.fields[mi], cityArr.fields[ami]],)
     const chart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -7192,7 +7193,7 @@ function populateIncomeHistogramForCity(cityArr) {
                 {
                     label: "6th Cycle RHNA",
                     backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9"],
-                    data: [cityArr.fields[vli], cityArr.fields[li], cityArr.fields[mi], cityArr.fields[ami]],
+                    data: [cityArr.fields[vli][0], cityArr.fields[li][0], cityArr.fields[mi][0], cityArr.fields[ami][0]],
                 }
             ]
         },
@@ -7328,7 +7329,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.location.hash.length > 1) {
             const hash = decodeURI(document.location.hash.substring(1));
             document.getElementById('rhna-selector').value = hash;
-            console.log(hash);
             selectionChanged(hash);
         }
     });
