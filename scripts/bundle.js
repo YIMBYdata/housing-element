@@ -7115,7 +7115,6 @@ function selectionChanged(id) {
     populateDueDaysForCity(cityData);
     populateIncomeHistogramForCity(cityData);
     populateResourceLinksForCity(cityData);
-    populateTableForCity(cityData);
     document.getElementById('rhna-data').style.display = 'block';
     window.location.hash = id;
 }
@@ -7138,37 +7137,6 @@ function populateSelectorWithCities(cities) {
     }
 }
 
-// Clears the contents of rhna-table and populates it with the specified array of data, cityArr.
-// cityArr must have exactly as many elements as the cols array.
-function populateTableForCity(cityArr) {
-    const table = document.getElementById('rhna-table');
-    table.innerHTML = '';
-    const headerRow = document.createElement('tr');
-    const header = document.createElement('th');
-    header.setAttribute('colspan', '2');
-    header.innerText = `Raw Data For ${cityArr.fields[jurisdiction]}`;
-    headerRow.appendChild(header);
-    table.appendChild(headerRow);
-    for (let key in cityArr.fields) {
-        const row = document.createElement('tr');
-        const keyCell = document.createElement('td');
-        const valueCell = document.createElement('td');
-
-        keyCell.innerText = key;
-        let value = cityArr.fields[key];
-        if (value[0] === null) {
-            value = 'No';
-        } else if (value[0] === true) {
-            value = 'Yes';
-        }
-        valueCell.innerText = value;
-
-        row.appendChild(keyCell);
-        row.appendChild(valueCell);
-        table.appendChild(row);
-    }
-}
-
 function clearCharts() {
     const charts = document.getElementById('rhna-charts');
     charts.innerHTML = '';
@@ -7184,7 +7152,6 @@ function populateIncomeHistogramForCity(cityArr) {
     const ctx = canvas.getContext('2d');
 
 
-    console.log([cityArr.fields[vli], cityArr.fields[li], cityArr.fields[mi], cityArr.fields[ami]],)
     const chart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -7263,31 +7230,12 @@ function populateStatementForCity(cityArr) {
 
 function populateResourceLinksForCity(cityArr) {
     const fifthElemLink = document.getElementById("5th-element");
-    const fifthElemWrapper = document.getElementById("5th-element-link-wrapper");
-    const fifthElemNotFound = document.getElementById("5th-element-not-found");
-    if (!cityArr.fields[fifthElement]) {
-        fifthElemWrapper.style.display = "none";
-        fifthElemNotFound.style.display = "inline";
-    } else {
-        fifthElemWrapper.style.display = "inline";
-        fifthElemNotFound.style.display = "none";
+    fifthElemLink.href = cityArr.fields[fifthElement];
+    fifthElemLink.innerText = cityArr.fields[fifthElement];
 
-        fifthElemLink.href = cityArr.fields[fifthElement];
-        fifthElemLink.innerText = cityArr.fields[fifthElement];
-    }
-
-    const sixthElemDraftLink = document.getElementById("6th-element-link");
-    const sixthElemVolunteerLink = document.getElementById("6th-element-volunteer-link");
-    if (!cityArr.fields[elemDraft]) {
-        sixthElemVolunteerLink.style.display = "inline";
-        sixthElemDraftLink.style.display = "none";
-    } else {
-        sixthElemVolunteerLink.style.display = "none";
-        sixthElemDraftLink.style.display = "inline";
-        sixthElemDraftLink.href = cityArr.fields[elemDraft];
-        sixthElemDraftLink.innerText = cityArr.fields[elemDraft];
-
-    }
+    const sixthElemDraftLink = document.getElementById("6th-element");
+    sixthElemDraftLink.href = cityArr.fields[elemDraft];
+    sixthElemDraftLink.innerText = cityArr.fields[elemDraft];
 }
 
 function getAirtableBase() {
