@@ -54,7 +54,6 @@ function clearCharts() {
     const charts = document.getElementById('rhna-charts');
     charts.innerHTML = '';
 }
-
 function populateIncomeHistogramForCity(cityArr) {
     const charts = document.getElementById('rhna-charts');
     const canvas = document.createElement('canvas');
@@ -65,36 +64,39 @@ function populateIncomeHistogramForCity(cityArr) {
     const ctx = canvas.getContext('2d');
 
 
+    console.log([cityArr.fields[vli], cityArr.fields[li], cityArr.fields[mi], cityArr.fields[ami]],)
     const chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'pie',
         data: {
             labels: [vli, li, mi, ami],
             datasets: [
                 {
                     label: "6th Cycle RHNA",
-                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9"],
+                    backgroundColor: ["#1e697a", "#7a0027", "#db6400", "#f8a62b"],
                     data: [cityArr.fields[vli][0], cityArr.fields[li][0], cityArr.fields[mi][0], cityArr.fields[ami][0]],
                 }
             ]
         },
         options: {
-            legend: { display: false },
+            legend: { display: true },
             title: {
                 display: true,
                 fontSize: 16,
                 fontColor: '#000',
                 text: "6th Cycle RHNA Allocation: By Income"
             },
-            scales: {
+/*            scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
                     }
                 }]
             }
-        }
+*/        }
     });
 }
+
+
 
 function populateJurisdictionBoxForCity(cityArr) {
     document.getElementById('jurisdiction').innerText = cityArr.fields[jurisdiction];
