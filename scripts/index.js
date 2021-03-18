@@ -64,7 +64,6 @@ function populateIncomeHistogramForCity(cityArr) {
     const ctx = canvas.getContext('2d');
 
 
-    console.log([cityArr.fields[vli], cityArr.fields[li], cityArr.fields[mi], cityArr.fields[ami]],)
     const chart = new Chart(ctx, {
         type: 'pie',
         data: {
