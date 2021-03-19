@@ -1,0 +1,33 @@
+{
+  "name": "housing-element",
+  "version": "1.0.0",
+  "description": "We use `npm` to manage dependencies. On your first run, run `npm install` from the root directory of the repo to install dependencies from the `npm-shrinkwrap.json` file.",
+  "main": "index.js",
+  "scripts": {
+    "watch": "watchify index.js -o build/bundle.js --debug -v",
+    "compile": "browserify index.js | terser --compress --mangle > build/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YIMBYdata/housing-element.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YIMBYdata/housing-element/issues"
+  },
+  "homepage": "https://github.com/YIMBYdata/housing-element#readme",
+  "dependencies": {
+    "airtable": "^0.10.1",
+    "browserify": "^17.0.0",
+    "prettier": "^2.2.1",
+    "terser": "^5.6.1",
+    "watchify": "^4.0.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true
+  }
+}

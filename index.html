@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-	<meta charset="UTF-8">
-	<meta name="Description" content="RHNA Data for California Cities">
-	<title>City Stats: RHNA Data</title>
-	<style>
-		/* :root {
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="Description" content="RHNA Data for California Cities" />
+		<title>City Stats: RHNA Data</title>
+		<style>
+			/* :root {
 			--text-primary: #333;
 			--text-strong: #111;
 			--theme-primary: #269;
@@ -19,275 +17,290 @@
 			--text-width: 70em;
 		} */
 
-		body {
-			background: var(--background-primary);
-			color: var(--text-primary);
-			display: block;
-			/* font-family: 'Helvetica', 'Arial', sans-serif; */
-			font-size: 16px;
-			line-height: 1.5;
-			margin: 0 auto;
-			max-width: var(--text-width);
-		}
+			body {
+				background: var(--background-primary);
+				color: var(--text-primary);
+				display: block;
+				/* font-family: 'Helvetica', 'Arial', sans-serif; */
+				font-size: 16px;
+				line-height: 1.5;
+				margin: 0 auto;
+				max-width: var(--text-width);
+			}
 
-		main {
-			margin: 12px var(--edge-margin);
-			;
-		}
+			main {
+				margin: 12px var(--edge-margin);
+			}
 
-		h3 {
-			margin: 5px;
-		}
+			h3 {
+				margin: 5px;
+			}
 
-		a {
-			color: var(--theme-primary);
-			cursor: pointer;
-			text-decoration: none;
-		}
+			a {
+				color: var(--theme-primary);
+				cursor: pointer;
+				text-decoration: none;
+			}
 
-		a:hover {
-			text-decoration: underline;
-		}
+			a:hover {
+				text-decoration: underline;
+			}
 
-		.page-header {
-			align-items: center;
-			background: var(--background-primary);
-			border-bottom: 1px solid var(--divider);
-			display: flex;
-			margin: 0 var(--edge-margin);
-			padding: 12px 0;
-			top: 0;
-		}
+			.page-header {
+				align-items: center;
+				background: var(--background-primary);
+				border-bottom: 1px solid var(--divider);
+				display: flex;
+				margin: 0 var(--edge-margin);
+				padding: 12px 0;
+				top: 0;
+			}
 
-		.page-header h1 {
-			color: var(--text-strong);
-			display: inline;
-			font-size: 36px;
-		}
+			.page-header h1 {
+				color: var(--text-strong);
+				display: inline;
+				font-size: 36px;
+			}
 
-		.page-header a {
-			margin: 0 5px 0 1px;
-		}
+			.page-header a {
+				margin: 0 5px 0 1px;
+			}
 
-		select {
-			font-size: 0.9em;
-		}
+			select {
+				font-size: 0.9em;
+			}
 
-		#rhna-table {
-			margin: 5px auto;
-			border: 1px solid #ccc;
-			border-spacing: 0;
-		}
+			#rhna-table {
+				margin: 5px auto;
+				border: 1px solid #ccc;
+				border-spacing: 0;
+			}
 
-		td {
-			padding: 2px 5px;
-		}
+			td {
+				padding: 2px 5px;
+			}
 
-		tr:nth-child(odd) {
-			background-color: var(--background-secondary);
-		}
+			tr:nth-child(odd) {
+				background-color: var(--background-secondary);
+			}
 
-		#rhna-data {
-			margin: 10px auto;
-			display: none;
-		}
+			#rhna-data {
+				margin: 10px auto;
+				display: none;
+			}
 
-		#grid-wrapper {
-			display: grid;
-			justify-content: center;
+			#grid-wrapper {
+				display: grid;
+				justify-content: center;
+			}
 
-		}
+			.grid-container {
+				display: grid;
+				/* grid-template-columns: repeat(auto-fill, minmax(350px, 400px)); */
+				/*changed max to 400 px to make the maximum columns 2, idk if that works */
+				/* This is better for small screens, once min() is better supported */
+				grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
+				grid-gap: 3rem;
+				margin: 10px 0;
+			}
 
-		.grid-container {
-			display: grid;
-			/* grid-template-columns: repeat(auto-fill, minmax(350px, 400px)); */
-			/*changed max to 400 px to make the maximum columns 2, idk if that works */
-			/* This is better for small screens, once min() is better supported */
-			grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr)); 
-			grid-gap: 3rem;
-			margin: 10px 0;
-		}
+			.grid-item {
+				background-color: #fff;
+				padding: 10px;
+				color: #000;
+				border: 2px solid #7a0a00;
+				border-radius: 5px;
+			}
 
-		.grid-item {
-			background-color: #FFF;
-			padding: 10px;
-			color: #000;
-			border: 2px solid #7a0a00;
-			border-radius: 5px;
+			.text-info {
+				font-size: 12pt;
+			}
 
+			.alternate-color {
+				background-color: #fff;
+			}
 
-		}
+			.due-item {
+				border: 2px solid #647a00;
+				border-radius: 5px;
+			}
 
-		.text-info {
-			font-size: 12pt;
-		}
+			.due-days-big {
+				font-size: 16pt;
+				text-align: center;
+			}
 
-		.alternate-color {
-			background-color: #FFF;
-		}
+			.cta-button {
+				border: 1px solid #ddd;
+				background: #7a0027;
+				box-shadow: none;
+				border-radius: 10px;
+				cursor: pointer;
+				padding: 5px;
+				font-size: 1.1em;
+				margin: 10px 0;
+			}
 
-		.due-item {
-			border: 2px solid #647a00;
-			border-radius: 5px;
-		}
+			.cta-button:hover {
+				background: #db6400;
+			}
 
-		.due-days-big {
-			font-size: 16pt;
-			text-align: center;
-		}
+			.credits {
+				font-size: 10pt;
+				margin: 5px;
+				text-align: center;
+			}
 
-		.cta-button {
-			border: 1px solid #ddd;
-			background: #7a0027;
-			box-shadow: none;
-			border-radius: 10px;
-			cursor: pointer;
-			padding: 5px;
-			font-size: 1.1em;
-			margin: 10px 0;
-		}
+			.control-area {
+				text-align: center;
+			}
 
-		.cta-button:hover {
-			background: #db6400;
-		}
+			.todo {
+				background-color: #91000f;
+				color: #fff !important;
+				padding: 5px;
+				margin: 2px;
+			}
 
-		.credits {
-			font-size: 10pt;
-			margin: 5px;
-			text-align: center;
-		}
+			.ext-link {
+				font-size: 0.85em;
+			}
+		</style>
+		<!-- Responsive viewport on mobile -->
+		<meta name="viewport" content="width=device-width" />
+		<!--chart.js library for displaying charts and graphs -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+		<script src="/build/bundle.js"></script>
+	</head>
 
-		.control-area {
-			text-align: center;
-		}
-
-		.todo {
-			background-color: #91000f;
-			color: #fff !important;
-			padding: 5px;
-			margin: 2px;
-		}
-
-		.ext-link {
-			font-size: 0.85em;
-		}
-	</style>
-	<!-- Responsive viewport on mobile -->
-	<meta name="viewport" content="width=device-width">
-	<!--chart.js library for displaying charts and graphs -->
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
-	<script src='/scripts/bundle.js'></script>
-
-</head>
-
-<body>
-	<header>
-	</header>
-	<main>
-		<div class="control-area">
-			<div>
-				<span>Find your city:</span>
-				<select id="rhna-selector">
-					<option>Select a city...</option>
-				</select>
-			</div>
-			<!-- <div>
+	<body>
+		<header></header>
+		<main>
+			<div class="control-area">
+				<div>
+					<span>Find your city:</span>
+					<select id="rhna-selector">
+						<option>Select a city...</option>
+					</select>
+				</div>
+				<!-- <div>
 					<button class="cta-button" onclick="window.open(volunteerLink,'_blank')">Volunteer!</button>
 				</div> -->
-		</div>
+			</div>
 
-
-		<div id='rhna-data'>
-			<div id="grid-wrapper">
-				<div class="grid-container">
-					<div class="grid-item">
-
-						<div class="text-info">
-							<div>Jurisdiction: <span id="jurisdiction"></span></div>
-							<div>County: <span id="county"></span></div>
-							<div>Council of Governments: <span id="cog"></span></div>
-							<div>Population: <span id="population"></span></div>
-							<div>Density: <span id="density"></span></div>
-							<div>Median Income: <span id="median"></span></div>
+			<div id="rhna-data">
+				<div id="grid-wrapper">
+					<div class="grid-container">
+						<div class="grid-item">
+							<div class="text-info">
+								<div>Jurisdiction: <span id="jurisdiction"></span></div>
+								<div>County: <span id="county"></span></div>
+								<div>Council of Governments: <span id="cog"></span></div>
+								<div>Population: <span id="population"></span></div>
+								<div>Density: <span id="density"></span></div>
+								<div>Median Income: <span id="median"></span></div>
+							</div>
 						</div>
 
-					</div>
-
-					<div class="grid-item due-item">
-						<div class="text-info">
-							<div>Your city's housing element is due in: </div>
-							<div class="due-days-big"><span id="element-due-days"></span> days</div> 
-							<div>On: <span id="element-due-date"></span></div>
-						</div>
-					</div>
-
-					<div class="grid-item">
-						<div class="text-info">
-							<div>6th Cycle RHNA: <span id="6th-count"></span></div>
-							<div>5th Cycle RHNA: <span id="5th-count"></span></div>
-							<div>Last cycle's progress: <span id="progress-blame"></span></div>
+						<div class="grid-item due-item">
+							<div class="text-info">
+								<div>Your city's housing element is due in:</div>
+								<div class="due-days-big">
+									<span id="element-due-days"></span> days
+								</div>
+								<div>On: <span id="element-due-date"></span></div>
+							</div>
 						</div>
 
-						
-						<div class="text-info">
-							<div><b>High progress score?</b></div>
-							<div>It might not be a good sign. The most exclusive and anti-housing jurisdictions were
-								typically able to ensure that their RHNA would be very low. Fortunately, the legislature
-								has	changed the allocation process to make the allocations more fair in the 6th cycle. </div>
-						</div>
-						
-					</div>
+						<div class="grid-item">
+							<div class="text-info">
+								<div>6th Cycle RHNA: <span id="6th-count"></span></div>
+								<div>5th Cycle RHNA: <span id="5th-count"></span></div>
+								<div>
+									Last cycle's progress: <span id="progress-blame"></span>
+								</div>
+							</div>
 
-					<div class="grid-item">
-						<div class="text-info cta-volunteer">
-							<div>Your city has <b><span id="countVolunteers"></span></b> volunteer watchdogs.</div>
-							<div id="cta-text"></div>
-							<a href='https://airtable.com/shr9fipLLj1WTHKu7' target="_blank">
-								<button class="cta-button">Volunteer!</button></a>
+							<div class="text-info">
+								<div><b>High progress score?</b></div>
+								<div>
+									It might not be a good sign. The most exclusive and
+									anti-housing jurisdictions were typically able to ensure that
+									their RHNA would be very low. Fortunately, the legislature has
+									changed the allocation process to make the allocations more
+									fair in the 6th cycle.
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<div class="grid-item">
-						<div id="rhna-charts"></div>
-					</div>
-					
-					<div class="grid-item">
-						<div class="text-info resource-links">
-							<div><b>Resource Links</b></div>
-								<br>
-							<a href="https://airtable.com/shrQT8Qh0ArXcypPN" target="_blank" id="6th-element-volunteer-link">
-								<button class="cta-button">Empty fields? Help out! Fill them in.</button>
-							</a>
-							<div>6th Cycle Housing Element Draft: 
-								<a href="#" id="6th-element" class="ext-link"></a>	
+						<div class="grid-item">
+							<div class="text-info cta-volunteer">
+								<div>
+									Your city has
+									<b><span id="countVolunteers"></span></b> volunteer watchdogs.
+								</div>
+								<div id="cta-text"></div>
+								<a
+									href="https://airtable.com/shr9fipLLj1WTHKu7"
+									target="_blank"
+								>
+									<button class="cta-button">Volunteer!</button></a
+								>
 							</div>
-							<div>5th Cycle Housing Element: 
-								<a href="#" id="5th-element" class="ext-link"></a>
-							</div>
-							<div>City's webpage for its Housing Element process: 
-								<a href="#" id="cityWebpage" class="ext-link"></a>
-							</div>
-							<div>Current Survey re HE Process:  
-								<a href="#" id="citySurvey" class="ext-link"></a>
-							</div>
-							<div>Upcoming meetings or hearings: 
-								<span id="Calendar"></span>
-							</div>
-							<div>Reports from recent meetings: 
-								<span id="report"></span>
-								<a href="/watchdog-reports" target="_blank" id="">
-									<button class="cta-button">Read more reports here.</button>
+						</div>
+
+						<div class="grid-item">
+							<div id="rhna-charts"></div>
+						</div>
+
+						<div class="grid-item">
+							<div class="text-info resource-links">
+								<div><b>Resource Links</b></div>
+								<br />
+								<a
+									href="https://airtable.com/shrQT8Qh0ArXcypPN"
+									target="_blank"
+									id="6th-element-volunteer-link"
+								>
+									<button class="cta-button">
+										Empty fields? Help out! Fill them in.
+									</button>
 								</a>
+								<div>
+									6th Cycle Housing Element Draft:
+									<a href="#" id="6th-element" class="ext-link"></a>
+								</div>
+								<div>
+									5th Cycle Housing Element:
+									<a href="#" id="5th-element" class="ext-link"></a>
+								</div>
+								<div>
+									City's webpage for its Housing Element process:
+									<a href="#" id="cityWebpage" class="ext-link"></a>
+								</div>
+								<div>
+									Current Survey re HE Process:
+									<a href="#" id="citySurvey" class="ext-link"></a>
+								</div>
+								<div>
+									Upcoming meetings or hearings:
+									<span id="Calendar"></span>
+								</div>
+								<div>
+									Reports from recent meetings:
+									<span id="report"></span>
+									<a href="/watchdog-reports" target="_blank" id="">
+										<button class="cta-button">Read more reports here.</button>
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
-
-				</div> <!-- close grid container -->
-			</div> <!-- close grid wrapper -->
-
-		</div> <!-- close rhna-data -->
-	</main>
-
-</body>
-
+					<!-- close grid container -->
+				</div>
+				<!-- close grid wrapper -->
+			</div>
+			<!-- close rhna-data -->
+		</main>
+	</body>
 </html>
