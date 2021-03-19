@@ -9,11 +9,10 @@ const base = new Airtable({ apiKey: 'keyZHNl5mF6KiNGzA' }).base(
 function selectionChanged(id) {
   const cityData = cities[id]
   console.log(cityData)
-  clearCharts()
   populateEasyTextFields(cityData)
   populateStatementForCity(cityData)
   populateDueDaysForCity(cityData)
-  populateIncomeHistogramForCity(cityData)
+  populateRHNAPieChartForCity(cityData)
   populateResourceLinksForCity(cityData)
   document.getElementById('rhna-data').style.display = 'block'
   window.location.hash = id
@@ -37,13 +36,9 @@ function populateSelectorWithCities(cities) {
   }
 }
 
-function clearCharts() {
+function populateRHNAPieChartForCity(city) {
   const charts = document.getElementById('rhna-charts')
   charts.innerHTML = ''
-}
-
-function populateIncomeHistogramForCity(city) {
-  const charts = document.getElementById('rhna-charts')
   const canvas = document.createElement('canvas')
   canvas.height = 200
   canvas.width = 400
@@ -76,14 +71,6 @@ function populateIncomeHistogramForCity(city) {
         fontColor: '#000',
         text: '6th Cycle RHNA Allocation: By Income',
       },
-      /*            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-*/
     },
   })
 }
