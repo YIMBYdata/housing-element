@@ -10,7 +10,7 @@ function selectionChanged(id) {
   const cityData = cities[id]
   console.log(cityData)
   clearCharts()
-  populateJurisdictionBoxForCity(cityData)
+  populateEasyTextFields(cityData)
   populateStatementForCity(cityData)
   populateDueDaysForCity(cityData)
   populateIncomeHistogramForCity(cityData)
@@ -42,7 +42,7 @@ function clearCharts() {
   charts.innerHTML = ''
 }
 
-function populateIncomeHistogramForCity(cityArr) {
+function populateIncomeHistogramForCity(city) {
   const charts = document.getElementById('rhna-charts')
   const canvas = document.createElement('canvas')
   canvas.height = 200
@@ -54,12 +54,17 @@ function populateIncomeHistogramForCity(cityArr) {
   const chart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ['vli', 'li', 'mi', 'ami'],
+      labels: [
+        'Very Low Income',
+        'Low Income',
+        'Moderate Income',
+        'Above Moderate Income',
+      ],
       datasets: [
         {
           label: '6th Cycle RHNA',
           backgroundColor: ['#1e697a', '#7a0027', '#db6400', '#f8a62b'],
-          data: [cityArr.vli, cityArr.li, cityArr.mi, cityArr.ami],
+          data: [city.vli, city.li, city.mi, city.ami],
         },
       ],
     },
@@ -83,15 +88,21 @@ function populateIncomeHistogramForCity(cityArr) {
   })
 }
 
-function populateJurisdictionBoxForCity(cityArr) {
-  document.getElementById('jurisdiction').innerText = cityArr.jurisdiction
-  document.getElementById('county').innerText = cityArr.county
-  document.getElementById('cog').innerText = cityArr.council
+function populateEasyTextFields(city) {
+  for (var field of [
+    'jurisdiction',
+    'county',
+    'cog',
+    'population',
+    'density',
+  ]) {
+    document.getElementById(field).innerText = city[field] || 'missing'
+  }
 }
 
-function populateDueDaysForCity(cityArr) {
+function populateDueDaysForCity(city) {
   today = new Date()
-  const dueDateStr = cityArr.duedate
+  const dueDateStr = city.duedate
   const due = new Date(dueDateStr)
   const one_day = 1000 * 60 * 60 * 24
   const days_left = Math.floor((due.getTime() - today.getTime()) / one_day)
@@ -99,12 +110,12 @@ function populateDueDaysForCity(cityArr) {
   document.getElementById('element-due-days').innerText = days_left
 }
 
-function populateStatementForCity(cityArr) {
+function populateStatementForCity(city) {
   const statement = document.getElementById('progress-statement')
-  const progress = cityArr.prog
+  const progress = city.prog
 
-  document.getElementById('5th-count').innerText = cityArr.rhna5
-  document.getElementById('6th-count').innerText = cityArr.rhna6
+  document.getElementById('5th-count').innerText = city.rhna5
+  document.getElementById('6th-count').innerText = city.rhna6
 
   if (
     progress === '' ||
@@ -117,6 +128,7 @@ function populateStatementForCity(cityArr) {
   }
 
   const blame = document.getElementById('progress-blame')
+  const progressBlurb = document.getElementById('progress-blurb')
   let numericPct = parseFloat(progress)
   let pct = Math.round(numericPct * 100)
   if (numericPct < 0.5) {
@@ -132,16 +144,17 @@ function populateStatementForCity(cityArr) {
     blame.innerText = `${pct}% - Something is up!`
     blame.style.color = 'green'
   }
+  progressBlurb.style.visibility = numericPct > 0.9 ? 'visible' : 'hidden'
 }
 
-function populateResourceLinksForCity(cityArr) {
+function populateResourceLinksForCity(city) {
   const fifthElemLink = document.getElementById('5th-element')
-  fifthElemLink.href = cityArr.fifthElement
-  fifthElemLink.innerText = cityArr.fifthElement
+  fifthElemLink.href = city.fifthElement
+  fifthElemLink.innerText = city.fifthElement
 
   const sixthElemDraftLink = document.getElementById('6th-element')
-  sixthElemDraftLink.href = cityArr.elemDraft
-  sixthElemDraftLink.innerText = cityArr.elemDraft
+  sixthElemDraftLink.href = city.elemDraft
+  sixthElemDraftLink.innerText = city.elemDraft
 }
 
 function normalizeRecord(record) {

@@ -99,10 +99,7 @@
 				/* grid-template-columns: repeat(auto-fill, minmax(350px, 400px)); */
 				/*changed max to 400 px to make the maximum columns 2, idk if that works */
 				/* This is better for small screens, once min() is better supported */
-				grid-template-columns: repeat(
-					auto-fill,
-					minmax(min(400px, 100%), 1fr)
-				);
+				grid-template-columns: repeat(auto-fill, minmax(min(400px, 100%), 1fr));
 				grid-gap: 3rem;
 				margin: 10px 0;
 			}
@@ -172,7 +169,7 @@
 		<!-- Responsive viewport on mobile -->
 		<meta name="viewport" content="width=device-width" />
 		<!--chart.js library for displaying charts and graphs -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 		<script src="build/bundle.js"></script>
 	</head>
 
@@ -205,54 +202,40 @@
 									Council of Governments:
 									<span id="cog"></span>
 								</div>
-								<div>
-									Population: <span id="population"></span>
-								</div>
+								<div>Population: <span id="population"></span></div>
 								<div>Density: <span id="density"></span></div>
-								<div>
-									Median Income: <span id="median"></span>
-								</div>
+								<div>Median Income: <span id="median"></span></div>
 							</div>
 						</div>
 
 						<div class="grid-item due-item">
 							<div class="text-info">
-								<div>
-									Your city's housing element is due in:
-								</div>
+								<div>Your city's housing element is due in:</div>
 								<div class="due-days-big">
 									<span id="element-due-days"></span> days
 								</div>
-								<div>
-									On: <span id="element-due-date"></span>
-								</div>
+								<div>On: <span id="element-due-date"></span></div>
 							</div>
 						</div>
 
 						<div class="grid-item">
 							<div class="text-info">
-								<div>
-									6th Cycle RHNA: <span id="6th-count"></span>
-								</div>
-								<div>
-									5th Cycle RHNA: <span id="5th-count"></span>
-								</div>
+								<div>6th Cycle RHNA: <span id="6th-count"></span> units</div>
+								<div>5th Cycle RHNA: <span id="5th-count"></span> units</div>
 								<div>
 									Last cycle's progress:
 									<span id="progress-blame"></span>
 								</div>
 							</div>
 
-							<div class="text-info">
+							<div class="text-info" id="progress-blurb">
 								<div><b>High progress score?</b></div>
 								<div>
-									It might not be a good sign. The most
-									exclusive and anti-housing jurisdictions
-									were typically able to ensure that their
-									RHNA would be very low. Fortunately, the
-									legislature has changed the allocation
-									process to make the allocations more fair in
-									the 6th cycle.
+									It might not be a good sign. The most exclusive and
+									anti-housing jurisdictions were typically able to ensure that
+									their RHNA would be very low. Fortunately, the legislature has
+									changed the allocation process to make the allocations more
+									fair in the 6th cycle.
 								</div>
 							</div>
 						</div>
@@ -269,9 +252,7 @@
 									href="https://airtable.com/shr9fipLLj1WTHKu7"
 									target="_blank"
 								>
-									<button class="cta-button">
-										Volunteer!
-									</button></a
+									<button class="cta-button">Volunteer!</button></a
 								>
 							</div>
 						</div>
@@ -295,36 +276,19 @@
 								</a>
 								<div>
 									6th Cycle Housing Element Draft:
-									<a
-										href="#"
-										id="6th-element"
-										class="ext-link"
-									></a>
+									<a href="#" id="6th-element" class="ext-link"></a>
 								</div>
 								<div>
 									5th Cycle Housing Element:
-									<a
-										href="#"
-										id="5th-element"
-										class="ext-link"
-									></a>
+									<a href="#" id="5th-element" class="ext-link"></a>
 								</div>
 								<div>
-									City's webpage for its Housing Element
-									process:
-									<a
-										href="#"
-										id="cityWebpage"
-										class="ext-link"
-									></a>
+									City's webpage for its Housing Element process:
+									<a href="#" id="cityWebpage" class="ext-link"></a>
 								</div>
 								<div>
 									Current Survey re HE Process:
-									<a
-										href="#"
-										id="citySurvey"
-										class="ext-link"
-									></a>
+									<a href="#" id="citySurvey" class="ext-link"></a>
 								</div>
 								<div>
 									Upcoming meetings or hearings:
@@ -333,14 +297,8 @@
 								<div>
 									Reports from recent meetings:
 									<span id="report"></span>
-									<a
-										href="/watchdog-reports"
-										target="_blank"
-										id=""
-									>
-										<button class="cta-button">
-											Read more reports here.
-										</button>
+									<a href="/watchdog-reports" target="_blank" id="">
+										<button class="cta-button">Read more reports here.</button>
 									</a>
 								</div>
 							</div>
