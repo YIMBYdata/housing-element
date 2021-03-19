@@ -1,7 +1,7 @@
 - [ ] it should say the literal number of signed up watchdogs currently
   - [ ] if it says your city has 0 watchdogs, i want one button that says "we need you, sign up to be a watchdog". if the city has 1+ it should say "come join the fun, sign up to be a watchdog"
 - [ ] missing fields (pop, density, median income) from airtable
-- [ ] reports from recent meetings - [ ] make visible somehow
+- [ ] make reports from recent meetings visible
 - [ ] if we have a resource link, post it, change CTA to "fill this field"
 - [ ] have the "high progress score?" text to only appear when the progress % is green.
 - [ ] resource drafts are links

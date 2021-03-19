@@ -1,29 +1,14 @@
 // global object holding all records, keyed by airtable id
-const cities = {}
+window.cities = {}
 
-const rhna6 = 'Total 6th c. RHNA (current)'
-const rhna5 = '5th Cycle RHNA (Total)'
-const jurisdiction = 'Jurisdiction'
-const county = 'County_display'
-const council = 'COG_display'
-const duedate = 'Due Date'
-const elemDraft = 'Housing Element Draft'
-const fifthElement = '5th Cycle Housing Element'
-const vli = 'VLI'
-const li = 'LI'
-const mi = 'MI'
-const ami = 'AMI'
-const prog = '5th Cycle Progress %'
-
-// new variables made by SKT below
-const finalAllocation = 'Final Allocation'
-const countVolunteers = 'Interested Volunteers'
-const population = 'Population'
-const area = 'Area'
-const density = 'Density'
+const Airtable = require('airtable')
+const base = new Airtable({ apiKey: 'keyZHNl5mF6KiNGzA' }).base(
+  'appRD2z3VXs78iq80'
+)
 
 function selectionChanged(id) {
   const cityData = cities[id]
+  console.log(cityData)
   clearCharts()
   populateJurisdictionBoxForCity(cityData)
   populateStatementForCity(cityData)
@@ -38,15 +23,15 @@ function selectionChanged(id) {
 function populateSelectorWithCities(cities) {
   const selector = document.getElementById('rhna-selector')
   let cities_arr = []
-  for (city in cities) {
-    cities_arr.push([cities[city].fields[jurisdiction], city])
+  for (id in cities) {
+    cities_arr.push([cities[id].jurisdiction, id])
   }
 
   cities_arr.sort()
 
-  for ([name, id] of cities_arr) {
+  for ([jurisdiction, id] of cities_arr) {
     const opt = document.createElement('option')
-    opt.innerText = name
+    opt.innerText = jurisdiction
     opt.value = id
     selector.appendChild(opt)
   }
@@ -56,6 +41,7 @@ function clearCharts() {
   const charts = document.getElementById('rhna-charts')
   charts.innerHTML = ''
 }
+
 function populateIncomeHistogramForCity(cityArr) {
   const charts = document.getElementById('rhna-charts')
   const canvas = document.createElement('canvas')
@@ -68,17 +54,12 @@ function populateIncomeHistogramForCity(cityArr) {
   const chart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: [vli, li, mi, ami],
+      labels: ['vli', 'li', 'mi', 'ami'],
       datasets: [
         {
           label: '6th Cycle RHNA',
           backgroundColor: ['#1e697a', '#7a0027', '#db6400', '#f8a62b'],
-          data: [
-            cityArr.fields[vli][0],
-            cityArr.fields[li][0],
-            cityArr.fields[mi][0],
-            cityArr.fields[ami][0],
-          ],
+          data: [cityArr.vli, cityArr.li, cityArr.mi, cityArr.ami],
         },
       ],
     },
@@ -103,15 +84,14 @@ function populateIncomeHistogramForCity(cityArr) {
 }
 
 function populateJurisdictionBoxForCity(cityArr) {
-  document.getElementById('jurisdiction').innerText =
-    cityArr.fields[jurisdiction]
-  document.getElementById('county').innerText = cityArr.fields[county]
-  document.getElementById('cog').innerText = cityArr.fields[council]
+  document.getElementById('jurisdiction').innerText = cityArr.jurisdiction
+  document.getElementById('county').innerText = cityArr.county
+  document.getElementById('cog').innerText = cityArr.council
 }
 
 function populateDueDaysForCity(cityArr) {
   today = new Date()
-  const dueDateStr = cityArr.fields[duedate]
+  const dueDateStr = cityArr.duedate
   const due = new Date(dueDateStr)
   const one_day = 1000 * 60 * 60 * 24
   const days_left = Math.floor((due.getTime() - today.getTime()) / one_day)
@@ -121,10 +101,10 @@ function populateDueDaysForCity(cityArr) {
 
 function populateStatementForCity(cityArr) {
   const statement = document.getElementById('progress-statement')
-  const progress = cityArr.fields[prog]
+  const progress = cityArr.prog
 
-  document.getElementById('5th-count').innerText = cityArr.fields[rhna5]
-  document.getElementById('6th-count').innerText = cityArr.fields[rhna6]
+  document.getElementById('5th-count').innerText = cityArr.rhna5
+  document.getElementById('6th-count').innerText = cityArr.rhna6
 
   if (
     progress === '' ||
@@ -133,7 +113,7 @@ function populateStatementForCity(cityArr) {
     progress === '0%' ||
     progress === '0.0%'
   ) {
-    return // No percent competion data.
+    return // No percent completion data.
   }
 
   const blame = document.getElementById('progress-blame')
@@ -156,25 +136,58 @@ function populateStatementForCity(cityArr) {
 
 function populateResourceLinksForCity(cityArr) {
   const fifthElemLink = document.getElementById('5th-element')
-  fifthElemLink.href = cityArr.fields[fifthElement]
-  fifthElemLink.innerText = cityArr.fields[fifthElement]
+  fifthElemLink.href = cityArr.fifthElement
+  fifthElemLink.innerText = cityArr.fifthElement
 
   const sixthElemDraftLink = document.getElementById('6th-element')
-  sixthElemDraftLink.href = cityArr.fields[elemDraft]
-  sixthElemDraftLink.innerText = cityArr.fields[elemDraft]
+  sixthElemDraftLink.href = cityArr.elemDraft
+  sixthElemDraftLink.innerText = cityArr.elemDraft
+}
+
+function normalizeRecord(record) {
+  const fields = {
+    ami: 'AMI',
+    area: 'Area',
+    council: 'COG_display',
+    countVolunteers: 'Interested Volunteers',
+    county: 'County_display',
+    density: 'Density',
+    duedate: 'Due Date',
+    elemDraft: 'Housing Element Draft',
+    fifthElement: '5th Cycle Housing Element',
+    finalAllocation: 'Final Allocation',
+    jurisdiction: 'Jurisdiction',
+    li: 'LI',
+    mi: 'MI',
+    population: 'Population',
+    prog: '5th Cycle Progress %',
+    rhna5: '5th Cycle RHNA (Total)',
+    rhna6: 'Total 6th c. RHNA (current)',
+    vli: 'VLI',
+  }
+
+  for (key in fields) {
+    let value = record.fields[fields[key]]
+    if (key == 'countVolunteers') {
+      value = Array.isArray(value) ? value.length : 0
+    } else if (Array.isArray(value) && value.length == 1) {
+      value = value[0]
+    }
+    fields[key] = value
+  }
+  fields.id = record.id
+  return fields
 }
 
 function populateCitiesFromAirtable() {
-  const Airtable = require('airtable')
-  const base = new Airtable({ apiKey: 'keyZHNl5mF6KiNGzA' }).base(
-    'appRD2z3VXs78iq80'
-  )
   return new Promise((resolve, reject) => {
     base('Cities')
       .select({ view: 'Main View' })
       .eachPage(
         function page(records, fetchNextPage) {
-          records.forEach((record) => (cities[record.id] = record))
+          records.forEach(
+            (record) => (cities[record.id] = normalizeRecord(record))
+          )
           fetchNextPage()
         },
         function done(err) {
