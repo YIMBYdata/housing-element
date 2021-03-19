@@ -92,9 +92,10 @@ function populateEasyTextFields(city) {
   for (var field of [
     'jurisdiction',
     'county',
-    'cog',
+    'council',
     'population',
     'density',
+    'countVolunteers',
   ]) {
     document.getElementById(field).innerText = city[field] || 'missing'
   }
@@ -162,7 +163,7 @@ function normalizeRecord(record) {
     ami: 'AMI',
     area: 'Area',
     council: 'COG_display',
-    countVolunteers: 'Interested Volunteers',
+    countVolunteers: 'Count (Interested Volunteers)',
     county: 'County_display',
     density: 'Density',
     duedate: 'Due Date',
@@ -181,9 +182,7 @@ function normalizeRecord(record) {
 
   for (key in fields) {
     let value = record.fields[fields[key]]
-    if (key == 'countVolunteers') {
-      value = Array.isArray(value) ? value.length : 0
-    } else if (Array.isArray(value) && value.length == 1) {
+    if (Array.isArray(value) && value.length == 1) {
       value = value[0]
     }
     fields[key] = value
