@@ -227,13 +227,21 @@ document.addEventListener('DOMContentLoaded', () => {
     selectionChanged(e.target.value)
   })
 
-  populateCitiesFromAirtable().then(() => {
-    populateSelectorWithCities(cities)
-
-    if (window.location.hash.length > 1) {
-      const hash = decodeURI(document.location.hash.substring(1))
-      document.getElementById('rhna-selector').value = hash
-      selectionChanged(hash)
-    }
-  })
+  if (window.location.hash.length > 1) {
+    const hash = decodeURI(document.location.hash.substring(1))
+    base('Cities')
+      .find(hash)
+      .then((record) => {
+        cities[record.id] = normalizeCityRecord(record)
+        selectionChanged(hash)
+        populateCitiesFromAirtable().then(() => {
+          populateSelectorWithCities(cities)
+          document.getElementById('rhna-selector').value = hash
+        })
+      })
+  } else {
+    populateCitiesFromAirtable().then(() => {
+      populateSelectorWithCities(cities)
+    })
+  }
 })

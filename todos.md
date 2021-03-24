@@ -1,11 +1,11 @@
 - [x] it should say the literal number of signed up watchdogs currently
   - [x] if it says your city has 0 watchdogs, i want one button that says "we need you, sign up to be a watchdog". if the city has 1+ it should say "come join the fun, sign up to be a watchdog"
 - [x] missing fields (pop, density, median income) from airtable
-- [ ] make reports from recent meetings visible
+- [x] make reports from recent meetings visible
 - [ ] if we have a resource link, post it, change CTA to "fill this field"
 - [x] have the "high progress score?" text to only appear when the progress % is green.
 - [ ] resource drafts are links
-- [ ] upcoming meetings are (should be?) title of meeting, maybe just have all event links go to default cal view (https://airtable.com/shraUxLIo3Lak60dV/tblGtVmzCuzAFoBNo)
+- [x] upcoming meetings are (should be?) title of meeting, maybe just have all event links go to default cal view (https://airtable.com/shraUxLIo3Lak60dV/tblGtVmzCuzAFoBNo)
 - [x] change chart labels to be more informative (add units to all RHNA numbers). median income should say dollars, etc.
 - [ ] housing element due date color background by urgency?
   - [ ] some housing elements are due in the past?
