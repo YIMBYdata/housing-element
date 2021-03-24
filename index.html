@@ -27,7 +27,7 @@
 			a {
 				color: var(--theme-primary);
 				cursor: pointer;
-				text-decoration: none;
+				text-decoration: underline;
 			}
 
 			a:hover {
@@ -117,10 +117,11 @@
 			}
 
 			.cta-button {
-				border: 1px solid #ddd;
-				background: #7a0027;
+				border: 2px solid #7a0027;
+				color: #7a0027;
+				background: transparent;
 				box-shadow: none;
-				border-radius: 10px;
+				border-radius: 5px;
 				cursor: pointer;
 				padding: 5px;
 				font-size: 1.1em;
@@ -173,12 +174,24 @@
 					<div class="grid-container">
 						<div class="grid-item">
 							<div class="text-info">
-								<div>Jurisdiction: {{ city.jurisdiction }}</div>
-								<div>County: {{ city.county }}</div>
-								<div>Council of Governments: {{ city.council }}</div>
-								<div>Population: {{ city.population }}</div>
-								<div>Density: {{ city.density }}</div>
-								<div>Median Income: {{ city.medianIncome }}</div>
+								<field
+									title="Jurisdiction"
+									v-bind:value="city.jurisdiction"
+								></field>
+								<field title="County" v-bind:value="city.county"></field>
+								<field
+									title="Council of Governments"
+									v-bind:value="city.council"
+								></field>
+								<field title="Population" v-bind:value="city.population">
+									{{ city.population }} people
+								</field>
+								<field title="Density" v-bind:value="city.density"
+									>{{ city.density }} people / sq. mi.</field
+								>
+								<field title="Median Income" v-bind:value="city.medianIncome"
+									>${{ city.medianIncome }}</field
+								>
 							</div>
 						</div>
 
@@ -195,8 +208,12 @@
 
 						<div class="grid-item">
 							<div class="text-info">
-								<div>6th Cycle RHNA: {{ city.rhna6 }}</div>
-								<div>5th Cycle RHNA: {{ city.rhna5 }}</div>
+								<field title="6th Cycle RHNA" v-bind:value="city.rhna6">
+									{{ city.rhna6 }} units
+								</field>
+								<field title="5th Cycle RHNA" v-bind:value="city.rhna5">
+									{{ city.rhna5 }} units
+								</field>
 								<div>
 									Last cycle's progress:
 									<span v-bind:style="{ color: progressColor }"
@@ -221,9 +238,8 @@
 						<div class="grid-item">
 							<div class="text-info cta-volunteer">
 								<div>
-									Your city has
-									<b><span id="countVolunteers"></span></b>
-									volunteer watchdogs.
+									Your city has <b>{{ city.countVolunteers }}</b> volunteer
+									watchdogs.
 								</div>
 								<div id="cta-text"></div>
 								<a

@@ -16,8 +16,6 @@ const app = new Vue({
         return 'red'
       } else if (this.city.progress < 90) {
         return 'orange'
-      } else if (this.city.progress < 200) {
-        return 'green'
       } else {
         return 'green'
       }
@@ -64,6 +62,17 @@ const app = new Vue({
   },
 })
 
+// allows for parent to set custom display of field as well as
+// automatically handling fallback "missing info" call to action
+Vue.component('field', {
+  props: ['title', 'value'],
+  template: `<div>
+      {{ title }}:
+      <slot v-if="value">{{ value }}</slot>
+      <a href="https://airtable.com/shr9fipLLj1WTHKu7" target="_blank" v-else>Missing data, volunteer to help!</a>
+    </div>`,
+})
+
 function selectionChanged(id) {
   data.city = cities[id]
   document.getElementById('rhna-data-app').style.display = 'block'
@@ -103,7 +112,7 @@ function normalizeRecord(record) {
     jurisdiction: 'Jurisdiction',
     li: 'LI',
     mi: 'MI',
-    population: 'Population',
+    population: 'Population (2010 census)',
     progress: '5th Cycle Progress %',
     rhna5: '5th Cycle RHNA (Total)',
     rhna6: 'Total 6th c. RHNA (current)',
