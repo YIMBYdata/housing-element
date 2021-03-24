@@ -5,18 +5,6 @@
 		<meta name="Description" content="RHNA Data for California Cities" />
 		<title>City Stats: RHNA Data</title>
 		<style>
-			/* :root {
-			--text-primary: #333;
-			--text-strong: #111;
-			--theme-primary: #269;
-			--background-primary: #eaeaea;
-			--background-secondary: #dadada;
-			--divider: #aaa;
-			--header-font-size: 26px;
-			--edge-margin: 2ch;
-			--text-width: 70em;
-		} */
-
 			body {
 				background: var(--background-primary);
 				color: var(--text-primary);
@@ -84,14 +72,13 @@
 				background-color: var(--background-secondary);
 			}
 
-			#rhna-data {
+			#rhna-data-app {
 				margin: 10px auto;
 				display: none;
 			}
 
 			#grid-wrapper {
 				display: grid;
-				justify-content: center;
 			}
 
 			.grid-container {
@@ -122,7 +109,6 @@
 
 			.due-item {
 				border: 2px solid #647a00;
-				border-radius: 5px;
 			}
 
 			#element-due-days {
@@ -168,9 +154,6 @@
 		</style>
 		<!-- Responsive viewport on mobile -->
 		<meta name="viewport" content="width=device-width" />
-		<!--chart.js library for displaying charts and graphs -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-		<script src="bundle.js"></script>
 	</head>
 
 	<body>
@@ -183,28 +166,19 @@
 						<option>Select a city...</option>
 					</select>
 				</div>
-				<!-- <div>
-					<button class="cta-button" onclick="window.open(volunteerLink,'_blank')">Volunteer!</button>
-				</div> -->
 			</div>
 
-			<div id="rhna-data">
-				<div id="grid-wrapper">
+			<div id="rhna-data-app">
+				<div id="grid-wrapper" v-if="city">
 					<div class="grid-container">
 						<div class="grid-item">
 							<div class="text-info">
-								<div>
-									Jurisdiction:
-									<span id="jurisdiction"></span>
-								</div>
-								<div>County: <span id="county"></span></div>
-								<div>
-									Council of Governments:
-									<span id="council"></span>
-								</div>
-								<div>Population: <span id="population"></span></div>
-								<div>Density: <span id="density"></span></div>
-								<div>Median Income: <span id="median"></span></div>
+								<div>Jurisdiction: {{ city.jurisdiction }}</div>
+								<div>County: {{ city.county }}</div>
+								<div>Council of Governments: {{ city.council }}</div>
+								<div>Population: {{ city.population }}</div>
+								<div>Density: {{ city.density }}</div>
+								<div>Median Income: {{ city.medianIncome }}</div>
 							</div>
 						</div>
 
@@ -212,24 +186,27 @@
 							<div class="text-info">
 								<div>
 									Your city's housing element is due in:
-									<span id="element-due-days"></span> days
+									<span id="element-due-days">{{ city.dueDaysLeft }}</span> days
 								</div>
 
-								<div>On: <span id="element-due-date"></span></div>
+								<div>On: {{ city.dueDate.toDateString() }}</div>
 							</div>
 						</div>
 
 						<div class="grid-item">
 							<div class="text-info">
-								<div>6th Cycle RHNA: <span id="6th-count"></span> units</div>
-								<div>5th Cycle RHNA: <span id="5th-count"></span> units</div>
+								<div>6th Cycle RHNA: {{ city.rhna6 }}</div>
+								<div>5th Cycle RHNA: {{ city.rhna5 }}</div>
 								<div>
 									Last cycle's progress:
-									<span id="progress-blame"></span>
+									<span v-bind:style="{ color: progressColor }"
+										>{{ city.progress }}%
+										<span v-if="city.progress > 200">- Something is up!</span>
+									</span>
 								</div>
 							</div>
 
-							<div class="text-info" id="progress-blurb">
+							<div class="text-info" v-if="city.progress > 90">
 								<div><b>High progress score?</b></div>
 								<div>
 									It might not be a good sign. The most exclusive and
@@ -311,5 +288,8 @@
 			</div>
 			<!-- close rhna-data -->
 		</main>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+		<script src="bundle.js"></script>
 	</body>
 </html>
