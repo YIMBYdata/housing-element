@@ -122,7 +122,6 @@ function normalizeCityRecord(record) {
   const fields = {
     ami: 'AMI',
     area: 'Area',
-    calendarIds: 'Calendar',
     council: 'COG_display',
     countVolunteers: 'Count (Interested Volunteers)',
     county: 'County_display',
@@ -139,6 +138,7 @@ function normalizeCityRecord(record) {
     rhna5: '5th Cycle RHNA (Total)',
     rhna6: 'Total 6th c. RHNA (current)',
     vli: 'VLI',
+    meetingReports: 'MtgReport_display',
   }
 
   for (key in fields) {
@@ -171,6 +171,7 @@ function normalizeCityRecord(record) {
       fields.progress = Math.round(parseFloat(fields.progress) * 100)
   }
 
+  fields.calendarIds = record.fields.Calendar
   fields.calendars = []
 
   fields.id = record.id

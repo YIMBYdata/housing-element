@@ -297,12 +297,9 @@
 										</li>
 									</ul>
 								</div>
-								<div>
+								<div v-if="city.meetingReports">
 									Reports from recent meetings:
-									<span id="report"></span>
-									<a href="/watchdog-reports" target="_blank" id="">
-										<button class="cta-button">Read more reports here.</button>
-									</a>
+									<p>{{ city.meetingReports }}</p>
 								</div>
 							</div>
 						</div>
