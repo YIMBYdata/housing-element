@@ -270,17 +270,7 @@
 
 						<div class="grid-item">
 							<div class="text-info resource-links">
-								<div><b>Resource Links</b></div>
-								<br />
-								<a
-									href="https://airtable.com/shrQT8Qh0ArXcypPN"
-									target="_blank"
-									id="6th-element-volunteer-link"
-								>
-									<button class="cta-button">
-										Empty fields? Help out! Fill them in.
-									</button>
-								</a>
+								<h3>Resource Links</h3>
 								<div>
 									6th Cycle Housing Element Draft:
 									<a href="#" id="6th-element" class="ext-link"></a>
@@ -301,7 +291,9 @@
 									Upcoming meetings or hearings:
 									<ul>
 										<li v-for="calendar in city.calendars" :key="calendar.id">
-											{{ calendar.fields['Short description'] }}
+											<a v-bind:href="calendar.link">{{
+												calendar.description
+											}}</a>
 										</li>
 									</ul>
 								</div>

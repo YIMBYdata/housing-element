@@ -35,7 +35,7 @@ const app = new Vue({
           base('Calendar').find(calendarId)
         )
       ).then((calendars) => {
-        this.city.calendars = calendars
+        this.city.calendars = calendars.map(normalizeCalendarRecord)
         delete this.city.calendarIds
       })
     }
@@ -172,6 +172,27 @@ function normalizeCityRecord(record) {
   }
 
   fields.calendars = []
+
+  fields.id = record.id
+  return fields
+}
+
+function normalizeCalendarRecord(record) {
+  const fields = {
+    date: 'Date & Time',
+    description: 'Short description',
+    link: 'Website',
+  }
+
+  for (key in fields) {
+    let value = record.fields[fields[key]]
+    if (Array.isArray(value) && value.length == 1) {
+      value = value[0]
+    }
+    fields[key] = value
+  }
+
+  fields.date = new Date(fields.date)
 
   fields.id = record.id
   return fields
