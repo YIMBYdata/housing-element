@@ -237,17 +237,30 @@
 
 						<div class="grid-item">
 							<div class="text-info cta-volunteer">
-								<div>
+								<div v-if="city.countVolunteers && city.countVolunteers > 0">
 									Your city has <b>{{ city.countVolunteers }}</b> volunteer
 									watchdogs.
+
+									<a
+										href="https://airtable.com/shr9fipLLj1WTHKu7"
+										target="_blank"
+									>
+										<button class="cta-button">
+											Join the fun and sign up to be a watchdog
+										</button>
+									</a>
 								</div>
-								<div id="cta-text"></div>
-								<a
-									href="https://airtable.com/shr9fipLLj1WTHKu7"
-									target="_blank"
-								>
-									<button class="cta-button">Volunteer!</button></a
-								>
+								<div v-else>
+									Your city has no volunteer watchdogs yet.
+									<a
+										href="https://airtable.com/shr9fipLLj1WTHKu7"
+										target="_blank"
+									>
+										<button class="cta-button">
+											We need you! Sign up to be a watchdog
+										</button>
+									</a>
+								</div>
 							</div>
 						</div>
 
