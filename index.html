@@ -299,7 +299,11 @@
 								</div>
 								<div>
 									Upcoming meetings or hearings:
-									<span id="Calendar"></span>
+									<ul>
+										<li v-for="calendar in city.calendars" :key="calendar.id">
+											{{ calendar.fields['Short description'] }}
+										</li>
+									</ul>
 								</div>
 								<div>
 									Reports from recent meetings:

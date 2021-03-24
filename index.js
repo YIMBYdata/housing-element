@@ -23,42 +23,24 @@ const app = new Vue({
   },
   updated: function () {
     if (!this.city) return
-    const charts = document.getElementById('rhna-charts')
-    charts.innerHTML = ''
-    const canvas = document.createElement('canvas')
-    canvas.height = 200
-    canvas.width = 400
-    charts.appendChild(canvas)
 
-    const ctx = canvas.getContext('2d')
+    if (!this.chartRendered) {
+      renderRHNAChart(this.city)
+      this.chartRendered = true
+    }
 
-    const chart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: [
-          'Very Low Income',
-          'Low Income',
-          'Moderate Income',
-          'Above Moderate Income',
-        ],
-        datasets: [
-          {
-            label: '6th Cycle RHNA',
-            backgroundColor: ['#1e697a', '#7a0027', '#db6400', '#f8a62b'],
-            data: [this.city.vli, this.city.li, this.city.mi, this.city.ami],
-          },
-        ],
-      },
-      options: {
-        legend: { display: true },
-        title: {
-          display: true,
-          fontSize: 16,
-          fontColor: '#000',
-          text: '6th Cycle RHNA Allocation: By Income',
-        },
-      },
-    })
+    if (this.city.calendarIds) {
+      Promise.all(
+        this.city.calendarIds.map((calendarId) =>
+          base('Calendar').find(calendarId)
+        )
+      ).then((calendars) => {
+        this.city.calendars = calendars
+        delete this.city.calendarIds
+      })
+    }
+
+    // hydrate linked airtable records... manually
   },
 })
 
@@ -72,6 +54,45 @@ Vue.component('field', {
       <a href="https://airtable.com/shr9fipLLj1WTHKu7" target="_blank" v-else>Missing data, volunteer to help!</a>
     </div>`,
 })
+
+function renderRHNAChart(city) {
+  const charts = document.getElementById('rhna-charts')
+  charts.innerHTML = ''
+  const canvas = document.createElement('canvas')
+  canvas.height = 200
+  canvas.width = 400
+  charts.appendChild(canvas)
+
+  const ctx = canvas.getContext('2d')
+
+  const chart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: [
+        'Very Low Income',
+        'Low Income',
+        'Moderate Income',
+        'Above Moderate Income',
+      ],
+      datasets: [
+        {
+          label: '6th Cycle RHNA',
+          backgroundColor: ['#1e697a', '#7a0027', '#db6400', '#f8a62b'],
+          data: [city.vli, city.li, city.mi, city.ami],
+        },
+      ],
+    },
+    options: {
+      legend: { display: true },
+      title: {
+        display: true,
+        fontSize: 16,
+        fontColor: '#000',
+        text: '6th Cycle RHNA Allocation: By Income',
+      },
+    },
+  })
+}
 
 function selectionChanged(id) {
   data.city = cities[id]
@@ -97,10 +118,11 @@ function populateSelectorWithCities(cities) {
   }
 }
 
-function normalizeRecord(record) {
+function normalizeCityRecord(record) {
   const fields = {
     ami: 'AMI',
     area: 'Area',
+    calendarIds: 'Calendar',
     council: 'COG_display',
     countVolunteers: 'Count (Interested Volunteers)',
     county: 'County_display',
@@ -149,6 +171,8 @@ function normalizeRecord(record) {
       fields.progress = Math.round(parseFloat(fields.progress) * 100)
   }
 
+  fields.calendars = []
+
   fields.id = record.id
   return fields
 }
@@ -160,7 +184,7 @@ function populateCitiesFromAirtable() {
       .eachPage(
         function page(records, fetchNextPage) {
           records.forEach(
-            (record) => (cities[record.id] = normalizeRecord(record))
+            (record) => (cities[record.id] = normalizeCityRecord(record))
           )
           fetchNextPage()
         },
