@@ -6,7 +6,18 @@ const base = new Airtable({ apiKey: 'keyZHNl5mF6KiNGzA' }).base(
   'appRD2z3VXs78iq80'
 )
 
-const data = { city: null }
+// allows for parent to set custom display of field as well as
+// automatically handling fallback "missing info" call to action
+Vue.component('field', {
+  props: ['title', 'value'],
+  template: `<div>
+      {{ title }}:
+      <slot v-if="value">{{ value }}</slot>
+      <a href="https://airtable.com/shr9fipLLj1WTHKu7" target="_blank" v-else>Missing data, volunteer to help!</a>
+    </div>`,
+})
+
+const data = { city: null, modalVisible: false, modalData: null }
 const app = new Vue({
   el: '#rhna-data-app',
   data: data,
@@ -50,8 +61,15 @@ const app = new Vue({
         delete this.city.meetingReportIDs
       })
     }
-
-    // hydrate linked airtable records... manually
+  },
+  methods: {
+    openModal(data) {
+      this.modalData = data
+      this.modalVisible = true
+    },
+    closeModal() {
+      this.modalVisible = false
+    },
   },
   filters: {
     truncate: function (text) {
@@ -61,17 +79,6 @@ const app = new Vue({
       return text
     },
   },
-})
-
-// allows for parent to set custom display of field as well as
-// automatically handling fallback "missing info" call to action
-Vue.component('field', {
-  props: ['title', 'value'],
-  template: `<div>
-      {{ title }}:
-      <slot v-if="value">{{ value }}</slot>
-      <a href="https://airtable.com/shr9fipLLj1WTHKu7" target="_blank" v-else>Missing data, volunteer to help!</a>
-    </div>`,
 })
 
 function renderRHNAChart(city) {
