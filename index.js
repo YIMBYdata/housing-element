@@ -40,7 +40,26 @@ const app = new Vue({
       })
     }
 
+    if (this.city.meetingReportIDs) {
+      Promise.all(
+        this.city.meetingReportIDs.map((meetingReportID) =>
+          base('Mtg Reports').find(meetingReportID)
+        )
+      ).then((reports) => {
+        this.city.meetingReports = reports.map(normalizeReportRecord)
+        delete this.city.meetingReportIDs
+      })
+    }
+
     // hydrate linked airtable records... manually
+  },
+  filters: {
+    truncate: function (text) {
+      if (!text) return ''
+      text = text.toString()
+      if (text.length > 200) return text.slice(0, 197) + '...'
+      return text
+    },
   },
 })
 
@@ -174,6 +193,9 @@ function normalizeCityRecord(record) {
   fields.calendarIds = record.fields.Calendar
   fields.calendars = []
 
+  fields.meetingReportIDs = record.fields['Mtg Reports']
+  fields.meetingReports = []
+
   fields.id = record.id
   return fields
 }
@@ -194,6 +216,23 @@ function normalizeCalendarRecord(record) {
   }
 
   fields.date = new Date(fields.date)
+
+  fields.id = record.id
+  return fields
+}
+
+function normalizeReportRecord(record) {
+  const fields = {
+    report: 'Report',
+  }
+
+  for (key in fields) {
+    let value = record.fields[fields[key]]
+    if (Array.isArray(value) && value.length == 1) {
+      value = value[0]
+    }
+    fields[key] = value
+  }
 
   fields.id = record.id
   return fields

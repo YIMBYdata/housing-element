@@ -297,9 +297,13 @@
 										</li>
 									</ul>
 								</div>
-								<div v-if="city.meetingReports">
+								<div>
 									Reports from recent meetings:
-									<p>{{ city.meetingReports }}</p>
+									<ul>
+										<li v-for="report in city.meetingReports" :key="report.id">
+											{{ report.report | truncate }}
+										</li>
+									</ul>
 								</div>
 							</div>
 						</div>
