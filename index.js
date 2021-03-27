@@ -17,7 +17,12 @@ Vue.component('field', {
     </div>`,
 })
 
-const data = { city: null, modalVisible: false, modalData: null }
+const data = {
+  city: null,
+  modalVisible: false,
+  modalData: null,
+  chartRendered: false,
+}
 const app = new Vue({
   el: '#rhna-data-app',
   data: data,
@@ -122,6 +127,7 @@ function renderRHNAChart(city) {
 
 function selectionChanged(id) {
   data.city = cities[id]
+  data.chartRendered = false
   document.getElementById('rhna-data-app').style.display = 'block'
   window.location.hash = id
 }

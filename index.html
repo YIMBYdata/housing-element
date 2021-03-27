@@ -269,7 +269,9 @@
 									<span id="element-due-days">{{ city.dueDaysLeft }}</span> days
 								</div>
 
-								<div>On: {{ city.dueDate.toDateString() }}</div>
+								<div v-if="city.dueDate">
+									On: {{ city.dueDate.toDateString() }}
+								</div>
 							</div>
 						</div>
 
