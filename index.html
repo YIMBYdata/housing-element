@@ -245,17 +245,22 @@
 									title="Jurisdiction"
 									v-bind:value="city.jurisdiction"
 								></field>
+								<br>
 								<field title="County" v-bind:value="city.county"></field>
+								<br>
 								<field
 									title="Council of Governments"
 									v-bind:value="city.council"
 								></field>
+								<br>
 								<field title="Population" v-bind:value="city.population">
 									{{ city.population }} people
 								</field>
+								<br>
 								<field title="Density" v-bind:value="city.density"
 									>{{ city.density }} people / sq. mi.</field
 								>
+								<br>
 								<field title="Median Income" v-bind:value="city.medianIncome"
 									>${{ city.medianIncome }}</field
 								>
@@ -265,8 +270,8 @@
 						<div class="grid-item due-item">
 							<div class="text-info">
 								<div>
-									Your city's housing element is due in:
-									<span id="element-due-days">{{ city.dueDaysLeft }}</span> days
+									This city's housing element is due in:
+									<p style="text-align:center"><span id="element-due-days">{{ city.dueDaysLeft }}</span> days></p>
 								</div>
 
 								<div v-if="city.dueDate">
@@ -277,14 +282,16 @@
 
 						<div class="grid-item">
 							<div class="text-info">
-								<field title="6th Cycle RHNA" v-bind:value="city.rhna6">
+								<field title="6th Cycle Regional Housing Needs Allocation" v-bind:value="city.rhna6">
 									{{ city.rhna6 }} units
 								</field>
-								<field title="5th Cycle RHNA" v-bind:value="city.rhna5">
+								<br>
+								<field title="5th Cycle Regional Housing Needs Allocation" v-bind:value="city.rhna5">
 									{{ city.rhna5 }} units
 								</field>
+								<br>
 								<div>
-									Last cycle's progress:
+									5th cycle's progress:
 									<span v-bind:style="{ color: progressColor }"
 										>{{ city.progress }}%
 										<span v-if="city.progress > 200">- Something is up!</span>
@@ -335,6 +342,7 @@
 
 						<div class="grid-item">
 							<div id="rhna-charts"></div>
+							<p>Each city's Regional Housing Needs Allocation is broken up into 4 categories, by income. Mouse over the pie slices to see this city's Allocation by affordability level. </p>
 						</div>
 
 						<div class="grid-item">
