@@ -161,6 +161,7 @@ function normalizeCityRecord(record) {
     dueDate: 'Due Date',
     elemDraft: 'Housing Element Draft',
     fifthElement: '5th Cycle Housing Element',
+    fifthElementDraftUrl: '6th c. Housing Element Draft',
     finalAllocation: 'Final Allocation',
     jurisdiction: 'Jurisdiction',
     li: 'LI',
@@ -169,6 +170,7 @@ function normalizeCityRecord(record) {
     progress: '5th Cycle Progress %',
     rhna5: '5th Cycle RHNA (Total)',
     rhna6: 'Total 6th c. RHNA (current)',
+    sixthElementDraftUrl: '5th Cycle Housing Element',
     vli: 'VLI',
     meetingReports: 'MtgReport_display',
   }
@@ -210,6 +212,7 @@ function normalizeCityRecord(record) {
   fields.meetingReports = []
 
   fields.id = record.id
+  console.log(fields)
   return fields
 }
 
