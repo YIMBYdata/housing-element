@@ -47,7 +47,9 @@ const app = new Vue({
 
     if (this.city.calendarIds) {
       Promise.all(
-        this.city.calendarIds.map((calendarId) => base('Cal').find(calendarId))
+        this.city.calendarIds.map((calendarId) =>
+          base('Calendar').find(calendarId)
+        )
       ).then((calendars) => {
         this.city.calendars = calendars.map(normalizeCalendarRecord)
         // debugger
