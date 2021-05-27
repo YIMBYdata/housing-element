@@ -47,11 +47,10 @@ const app = new Vue({
 
     if (this.city.calendarIds) {
       Promise.all(
-        this.city.calendarIds.map((calendarId) =>
-          base('Calendar').find(calendarId)
-        )
+        this.city.calendarIds.map((calendarId) => base('Cal').find(calendarId))
       ).then((calendars) => {
         this.city.calendars = calendars.map(normalizeCalendarRecord)
+        // debugger
         delete this.city.calendarIds
       })
     }
@@ -155,7 +154,7 @@ function normalizeCityRecord(record) {
     ami: 'AMI',
     area: 'Area',
     council: 'COG_display',
-    countVolunteers: 'Count (Interested Volunteers)',
+    countVolunteers: '# Volunteers',
     county: 'County_display',
     density: 'Density',
     dueDate: 'Due Date',
@@ -169,7 +168,7 @@ function normalizeCityRecord(record) {
     population: 'Population (2010 census)',
     progress: '5th Cycle Progress %',
     rhna5: '5th Cycle RHNA (Total)',
-    rhna6: 'Total 6th c. RHNA (current)',
+    rhna6: '6th Cycle RHNA',
     sixthElementDraftUrl: '5th Cycle Housing Element',
     vli: 'VLI',
     meetingReports: 'MtgReport_display',
@@ -212,14 +211,13 @@ function normalizeCityRecord(record) {
   fields.meetingReports = []
 
   fields.id = record.id
-  console.log(fields)
   return fields
 }
 
 function normalizeCalendarRecord(record) {
   const fields = {
     date: 'Date & Time',
-    description: 'Short description',
+    description: 'Short Description',
     link: 'Website',
   }
 
