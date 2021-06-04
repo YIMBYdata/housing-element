@@ -362,28 +362,24 @@
 							<div class="text-info resource-links">
 								<h3>Resource Links</h3>
 								<div v-if="city.sixthElementDraftUrl">
-									<a
-										v-bind:href="city.sixthElementDraftUrl"
-										id="6th-element"
-										target="_blank"
+									<a v-bind:href="city.sixthElementDraftUrl" target="_blank"
 										>6th Cycle Housing Element Draft</a
 									>
 								</div>
 								<div v-if="city.fifthElementDraftUrl">
-									<a
-										v-bind:href="city.fifthElementDraftUrl"
-										id="5th-element"
-										target="_blank"
+									<a v-bind:href="city.fifthElementDraftUrl" target="_blank"
 										>5th Cycle Housing Element Draft</a
 									>
 								</div>
-								<div>
-									City's webpage for its Housing Element process:
-									<a href="#" id="cityWebpage" class="ext-link"></a>
+								<div v-if="city.HEWebpageUrl">
+									<a v-bind:href="city.HEWebpageUrl" target="_blank"
+										>City's webpage for its Housing Element process</a
+									>
 								</div>
-								<div>
-									Current Survey re HE Process:
-									<a href="#" id="citySurvey" class="ext-link"></a>
+								<div v-if="city.HESurveyUrl">
+									<a v-bind:href="city.HESurveyUrl" target="_blank"
+										>Current Survey re HE Process</a
+									>
 								</div>
 								<div>
 									Upcoming meetings or hearings:

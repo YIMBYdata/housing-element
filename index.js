@@ -154,16 +154,14 @@ function populateSelectorWithCities(cities) {
 function normalizeCityRecord(record) {
   const fields = {
     ami: 'AMI',
-    area: 'Area',
     council: 'COG_display',
     countVolunteers: '# Volunteers',
     county: 'County_display',
     density: 'Density',
     dueDate: 'Due Date',
-    elemDraft: 'Housing Element Draft',
-    fifthElement: '5th Cycle Housing Element',
-    fifthElementDraftUrl: '6th c. Housing Element Draft',
-    finalAllocation: 'Final Allocation',
+    fifthElementDraftUrl: '5th Cycle Housing Element',
+    HEWebpageUrl: 'City HE Webpage',
+    HESurveyUrl: 'Housing Survey',
     jurisdiction: 'Jurisdiction',
     li: 'LI',
     mi: 'MI',
@@ -171,7 +169,7 @@ function normalizeCityRecord(record) {
     progress: '5th Cycle Progress %',
     rhna5: '5th Cycle RHNA (Total)',
     rhna6: '6th Cycle RHNA',
-    sixthElementDraftUrl: '5th Cycle Housing Element',
+    sixthElementDraftUrl: '6th Cycle Draft',
     vli: 'VLI',
     meetingReports: 'MtgReport_display',
   }
@@ -257,7 +255,7 @@ function normalizeReportRecord(record) {
 function populateCitiesFromAirtable() {
   return new Promise((resolve, reject) => {
     base('Cities')
-      .select({ view: 'Main View' })
+      .select({ view: 'City Data' })
       .eachPage(
         function page(records, fetchNextPage) {
           records.forEach(
