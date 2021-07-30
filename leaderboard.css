@@ -50,6 +50,9 @@ body {
 .leaders_list.list {
   margin: 2rem 1.5rem 0;
 }
+.leaders_list.list h1 {
+  font-size: 3rem;
+}
 
 .list {
   flex: 310px 1 0;
@@ -74,6 +77,9 @@ body {
   background: white;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
+}
+.list__header h1 {
+  font-size: 2rem;
 }
 .list__header h1,
 .list__header h5 {
