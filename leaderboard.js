@@ -37,7 +37,6 @@
           maxRecords: 3,
           sort: [{ field: field, direction: 'desc' }],
         })
-
         .firstPage(function (err, records) {
           if (err) {
             console.error(err)
