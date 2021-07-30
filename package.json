@@ -1,11 +1,11 @@
 {
   "name": "housing-element",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "We use `npm` to manage dependencies. On your first run, run `npm install` from the root directory of the repo to install dependencies from the `npm-shrinkwrap.json` file.",
-  "main": "index.js",
+  "main": "cities.js",
   "scripts": {
-    "watch": "watchify index.js -o bundle.js --debug -v",
-    "compile": "browserify index.js | terser --compress --mangle > bundle.js"
+    "watch": "watchify cities.js leaderboard.js -o bundle.js --debug -v",
+    "compile": "browserify cities.js leaderboard.js | terser --compress --mangle > bundle.js"
   },
   "repository": {
     "type": "git",
