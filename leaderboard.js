@@ -57,5 +57,10 @@
     })
   }
 
-  getTopVolunteers().then((res) => console.log(res))
+  getTopVolunteers().then((volunteer_groups) => {
+    new Vue({
+      el: '#leaderboard-container',
+      data: volunteer_groups,
+    })
+  })
 })()
