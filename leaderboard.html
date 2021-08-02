@@ -5,134 +5,112 @@
     <meta name="Description" content="Fair Housing Elements Leaderboard" />
     <title>Fair Housing Elements Leaderboard</title>
     <link rel="stylesheet" href="leaderboard.css" />
+
+    <!-- these two scripts should be included in page head or footer -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="bundle.js"></script>
   </head>
 
   <body>
-    <div id="leaderboard-container" class="leader_lists_wrapper">
-      <div class="leaders_list list">
-        <div class="list__header">
-          <h5>fair housing elements leaders</h5>
-          <h1>🏅 Overall</h1>
-        </div>
-        <div class="list__body">
-          <table class="list__table">
-            <tbody>
-              <tr
-                class="list__row"
-                v-for="(volunteer, idx) in total"
-                :key="volunteer.name"
-              >
-                <td class="list__cell">
-                  <span class="list__value">{{ idx + 1 }}</span>
-                </td>
-                <td class="list__cell">
-                  <span class="list__value">
-                    <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
-                  ><small class="list__label">{{ volunteer.location }}</small>
-                </td>
-                <td class="list__cell">
-                  <span class="list__value">{{ volunteer.score }} 🌟</span
-                  ><small class="list__label">Points</small>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="individual_sublists_wrapper">
-        <div class="calendar_list list">
-          <div class="list__header">
-            <h5>fair housing elements leaders</h5>
-            <h1>🗓️ Calendar</h1>
-          </div>
-          <div class="list__body">
-            <table class="list__table">
-              <tbody>
-                <tr
-                  class="list__row"
-                  v-for="(volunteer, idx) in calendar"
-                  :key="volunteer.name"
-                >
-                  <td class="list__cell">
-                    <span class="list__value">{{ idx + 1 }}</span>
-                  </td>
-                  <td class="list__cell">
-                    <span class="list__value">
-                      <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
-                    ><small class="list__label">{{ volunteer.location }}</small>
-                  </td>
-                  <td class="list__cell">
-                    <span class="list__value">{{ volunteer.score }} 🌟</span
-                    ><small class="list__label">Points</small>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="meeting_list list">
-          <div class="list__header">
-            <h5>fair housing elements leaders</h5>
-            <h1>📝 Meeting Reports</h1>
-          </div>
-          <div class="list__body">
-            <table class="list__table">
-              <tbody>
-                <tr
-                  class="list__row"
-                  v-for="(volunteer, idx) in meeting"
-                  :key="volunteer.name"
-                >
-                  <td class="list__cell">
-                    <span class="list__value">{{ idx + 1 }}</span>
-                  </td>
-                  <td class="list__cell">
-                    <span class="list__value">
-                      <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
-                    ><small class="list__label">{{ volunteer.location }}</small>
-                  </td>
-                  <td class="list__cell">
-                    <span class="list__value">{{ volunteer.score }} 🌟</span
-                    ><small class="list__label">Points</small>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="homework_list list">
-          <div class="list__header">
-            <h5>fair housing elements leaders</h5>
-            <h1>📓 Homework</h1>
-          </div>
-          <div class="list__body">
-            <table class="list__table">
-              <tbody>
-                <tr
-                  class="list__row"
-                  v-for="(volunteer, idx) in homework"
-                  :key="volunteer.name"
-                >
-                  <td class="list__cell">
-                    <span class="list__value">{{ idx + 1 }}</span>
-                  </td>
-                  <td class="list__cell">
-                    <span class="list__value">
-                      <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
-                    ><small class="list__label">{{ volunteer.location }}</small>
-                  </td>
-                  <td class="list__cell">
-                    <span class="list__value">{{ volunteer.score }} 🌟</span
-                    ><small class="list__label">Points</small>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <!-- each of the four blocks below are pasteable in sqs code blocks -->
+    <div class="list__body">
+      <table class="list__table">
+        <tbody>
+          <tr
+            class="list__row"
+            v-for="(volunteer, idx) in total"
+            :key="volunteer.name"
+          >
+            <td class="list__cell">
+              <span class="list__value">{{ idx + 1 }}</span>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">
+                <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
+              ><small class="list__label">{{ volunteer.location }}</small>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">{{ volunteer.score }} 🌟</span
+              ><small class="list__label">Points</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-    <script src="bundle.js"></script>
+
+    <div class="list__body">
+      <table class="list__table">
+        <tbody>
+          <tr
+            class="list__row"
+            v-for="(volunteer, idx) in calendar"
+            :key="volunteer.name"
+          >
+            <td class="list__cell">
+              <span class="list__value">{{ idx + 1 }}</span>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">
+                <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
+              ><small class="list__label">{{ volunteer.location }}</small>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">{{ volunteer.score }} 🌟</span
+              ><small class="list__label">Points</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="list__body">
+      <table class="list__table">
+        <tbody>
+          <tr
+            class="list__row"
+            v-for="(volunteer, idx) in meeting"
+            :key="volunteer.name"
+          >
+            <td class="list__cell">
+              <span class="list__value">{{ idx + 1 }}</span>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">
+                <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
+              ><small class="list__label">{{ volunteer.location }}</small>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">{{ volunteer.score }} 🌟</span
+              ><small class="list__label">Points</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="list__body">
+      <table class="list__table">
+        <tbody>
+          <tr
+            class="list__row"
+            v-for="(volunteer, idx) in homework"
+            :key="volunteer.name"
+          >
+            <td class="list__cell">
+              <span class="list__value">{{ idx + 1 }}</span>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">
+                <span v-if="idx == 0">🥇 </span>{{ volunteer.name }}</span
+              ><small class="list__label">{{ volunteer.location }}</small>
+            </td>
+            <td class="list__cell">
+              <span class="list__value">{{ volunteer.score }} 🌟</span
+              ><small class="list__label">Points</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

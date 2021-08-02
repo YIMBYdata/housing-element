@@ -1,5 +1,5 @@
-;(function () {
-  if (!document.getElementById('leaderboard-container')) return
+document.addEventListener('DOMContentLoaded', function () {
+  if (!document.getElementsByClassName('list__table')) return
 
   const Airtable = require('airtable')
   const base = new Airtable({ apiKey: 'keyZHNl5mF6KiNGzA' }).base(
@@ -57,9 +57,11 @@
   }
 
   getTopVolunteers().then((volunteer_groups) => {
-    new Vue({
-      el: '#leaderboard-container',
-      data: volunteer_groups,
-    })
+    for (const table of document.getElementsByClassName('list__table')) {
+      new Vue({
+        el: table,
+        data: volunteer_groups,
+      })
+    }
   })
-})()
+})
