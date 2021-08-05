@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
       base('Volunteers')
         .select({
           view: 'Individual Leaderboard',
-          maxRecords: 3,
+          maxRecords: 5,
           sort: [{ field: field, direction: 'desc' }],
         })
         .firstPage(function (err, records) {
