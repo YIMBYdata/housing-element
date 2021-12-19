@@ -141,7 +141,8 @@
     const selector = document.getElementById('rhna-selector')
     let cities_arr = []
     for (id in cities) {
-      cities_arr.push([cities[id].jurisdiction, id])
+      if (cities[id].jurisdiction)
+        cities_arr.push([cities[id].jurisdiction, id])
     }
 
     cities_arr.sort()
