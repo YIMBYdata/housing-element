@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!document.getElementsByClassName('list__table')) return
 
   const Airtable = require('airtable')
-  const base = new Airtable({ apiKey: 'keyZHNl5mF6KiNGzA' }).base(
+  const base = new Airtable({ apiKey: 'keyY6U9sItI9v3HG1' }).base(
     'appRD2z3VXs78iq80'
   )
 

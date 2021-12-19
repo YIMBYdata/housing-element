@@ -2,7 +2,7 @@
   if (!document.getElementById('rhna-data-app')) return
 
   const Airtable = require('airtable')
-  const base = new Airtable({ apiKey: 'keyZHNl5mF6KiNGzA' }).base(
+  const base = new Airtable({ apiKey: 'keyY6U9sItI9v3HG1' }).base(
     'appRD2z3VXs78iq80'
   )
 
@@ -63,7 +63,7 @@
       if (this.city.meetingReportIDs) {
         Promise.all(
           this.city.meetingReportIDs.map((meetingReportID) =>
-            base('Mtg Reports').find(meetingReportID)
+            base('Reports').find(meetingReportID)
           )
         ).then((reports) => {
           this.city.meetingReports = reports.map(normalizeReportRecord)
