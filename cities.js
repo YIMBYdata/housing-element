@@ -166,6 +166,7 @@
       fifthElementDraftUrl: '5th Cycle Housing Element',
       HEWebpageUrl: 'City HE Webpage',
       HESurveyUrl: 'Housing Survey',
+      HEStatus: 'HE Status',
       jurisdiction: 'Jurisdiction',
       li: 'LI',
       mi: 'MI',

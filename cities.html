@@ -280,6 +280,20 @@
 								<div v-if="city.dueDate">
 									On: {{ city.dueDate.toDateString() }}
 								</div>
+
+								<div v-if="city.HEStatus == 'IN'">
+									The housing element is in compliance
+								</div>
+								<div v-if="city.HEStatus == 'OUT'">
+									The housing element is out of compliance
+								</div>
+								<div v-if="city.HEStatus == 'DUE'">
+									The housing element is out of compliance
+								</div>
+								<div v-if="city.HEStatus == 'CONDITIONAL'">
+									The housing element is approved, conditional on certain
+									checkpoints or criteria being met.
+								</div>
 							</div>
 						</div>
 
