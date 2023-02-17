@@ -259,7 +259,7 @@
 
   function populateCitiesFromAirtable() {
     return new Promise((resolve, reject) => {
-      base('Cities')
+      base('HCD Cities')
         .select({ view: 'City Data' })
         .eachPage(
           function page(records, fetchNextPage) {
@@ -287,7 +287,7 @@
 
     if (window.location.hash.length > 1) {
       const hash = decodeURI(document.location.hash.substring(1))
-      base('Cities')
+      base('HCD Cities')
         .find(hash)
         .then((record) => {
           cities[record.id] = normalizeCityRecord(record)
