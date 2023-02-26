@@ -171,7 +171,7 @@
       li: 'LI',
       mi: 'MI',
       medianIncome: 'Median Income',
-      population: 'Population (2010)',
+      population: 'Population (2020)',
       progress: '5th Cycle Progress %',
       rhna5: '5th Cycle RHNA (Total)',
       rhna6: '6th Cycle RHNA',
