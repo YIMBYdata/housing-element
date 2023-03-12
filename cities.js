@@ -59,17 +59,6 @@
           delete this.city.calendarIds
         })
       }
-
-      if (this.city.meetingReportIDs) {
-        Promise.all(
-          this.city.meetingReportIDs.map((meetingReportID) =>
-            base('Reports').find(meetingReportID)
-          )
-        ).then((reports) => {
-          this.city.meetingReports = reports.map(normalizeReportRecord)
-          delete this.city.meetingReportIDs
-        })
-      }
     },
     methods: {
       openModal(data) {
@@ -213,9 +202,6 @@
     fields.calendarIds = record.fields.Calendar
     fields.calendars = []
 
-    fields.meetingReportIDs = record.fields['MtgReport_display']
-    fields.meetingReports = []
-
     fields.id = record.id
     return fields
   }
@@ -236,23 +222,6 @@
     }
 
     fields.date = new Date(fields.date)
-
-    fields.id = record.id
-    return fields
-  }
-
-  function normalizeReportRecord(record) {
-    const fields = {
-      report: 'Report',
-    }
-
-    for (key in fields) {
-      let value = record.fields[fields[key]]
-      if (Array.isArray(value) && value.length == 1) {
-        value = value[0]
-      }
-      fields[key] = value
-    }
 
     fields.id = record.id
     return fields
