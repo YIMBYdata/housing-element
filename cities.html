@@ -108,7 +108,7 @@
 			}
 
 			.due-item {
-				border: 2px solid #647a00;
+				border: 2px solid #696969;
 			}
 
 			#element-due-days {
@@ -254,16 +254,17 @@
 								></field>
 								<br />
 								<field title="Population" v-bind:value="city.population">
-									{{ (city.population).toLocaleString('en-US', {valute: 'USD'}) }} people
+									{{ (city.population).toLocaleString() }} people
 								</field>
 								<br />
 								<field title="Density" v-bind:value="city.density"
-									>{{ (city.density).toLocaleString('en-US', {valute: 'USD'}) }} people / sq. mi.</field
+									>{{ (city.density).toLocaleString() }} people / sq. mi.</field
 								>
 								<br />
 								<field title="Median Income" v-bind:value="city.medianIncome"
-									>${{ (city.medianIncome).toLocaleString('en-US', {valute: 'USD'})  }}</field
-								>
+									>${{ (city.medianIncome).toLocaleString('en-US', {valute: 'USD'})  }}
+									<span v-if="city.medianIncome > 250000">- The median household incomes that are above $250,000 are listed as $250,001 since the census lists them as "$250,000+". It may be misleading since some of these cities (there are only 6 of them in California) have average household incomes close to $500,000.</span>
+								</field>
 							</div>
 						</div>
 
@@ -272,7 +273,7 @@
 								<div>
 									This city's housing element is due in:
 									<p style="text-align: center">
-										<span id="element-due-days">{{ (city.dueDaysLeft).toLocaleString('en-US', {valute: 'USD'}) }}</span>
+										<span id="element-due-days">{{ (city.dueDaysLeft).toLocaleString() }}</span>
 										days
 									</p>
 								</div>
@@ -304,14 +305,14 @@
 									title="6th Cycle Regional Housing Needs Allocation"
 									v-bind:value="city.rhna6"
 								>
-									{{ (city.rhna6).toLocaleString('en-US', {valute: 'USD'}) }} units
+									{{ (city.rhna6).toLocaleString() }} units
 								</field>
 								<br />
 								<field
 									title="5th Cycle Regional Housing Needs Allocation"
 									v-bind:value="city.rhna5"
 								>
-									{{ (city.rhna5).toLocaleString('en-US', {valute: 'USD'}) }} units
+									{{ (city.rhna5).toLocaleString() }} units
 								</field>
 								<br />
 								<div>
@@ -406,15 +407,24 @@
 										</li>
 									</ul>
 								</div>
+								
+								
 								<div>
 									Reports from recent meetings:
-									<ul>
-										<li v-for="report in city.meetingReports" :key="report.id">
-											<a @click="openModal(report.report)"
-												>{{ report.report | truncate }}</a
-											>
-										</li>
-									</ul>
+									<div v-if="Array.isArray(city.report)">
+										<ul>
+											<li v-for="report in city.report" :key="report.id">
+												<a @click="openModal(report)"
+													>{{ report | truncate }}</a
+												>
+											</li>
+										</ul>
+									</div>
+									<div v-if="!Array.isArray(city.report)">
+										<a @click="openModal(city.report)"
+											>{{ city.report | truncate }}</a
+										>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -447,6 +457,6 @@
 		</main>
 		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-		<script src="https://yimbydata.github.io/housing-element/bundle.js"></script> 
+		<script src="https://yimbydata.github.io/housing-element/bundle.js"></script>
 	</body>
 </html>

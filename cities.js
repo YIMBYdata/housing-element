@@ -177,7 +177,7 @@
       rhna6: '6th Cycle RHNA',
       sixthElementDraftUrl: '6th Cycle Draft',
       vli: 'VLI',
-      meetingReports: 'MtgReport_display',
+      report: 'MtgReport_display'
     }
 
     for (key in fields) {
@@ -213,7 +213,7 @@
     fields.calendarIds = record.fields.Calendar
     fields.calendars = []
 
-    fields.meetingReportIDs = record.fields['Mtg Reports']
+    fields.meetingReportIDs = record.fields['MtgReport_display']
     fields.meetingReports = []
 
     fields.id = record.id
