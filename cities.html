@@ -108,7 +108,7 @@
 			}
 
 			.due-item {
-				border: 2px solid #647a00;
+				border: 2px solid #696969;
 			}
 
 			#element-due-days {
@@ -254,16 +254,17 @@
 								></field>
 								<br />
 								<field title="Population" v-bind:value="city.population">
-									{{ city.population }} people
+									{{ (city.population).toLocaleString() }} people
 								</field>
 								<br />
 								<field title="Density" v-bind:value="city.density"
-									>{{ city.density }} people / sq. mi.</field
+									>{{ (city.density).toLocaleString() }} people / sq. mi.</field
 								>
 								<br />
 								<field title="Median Income" v-bind:value="city.medianIncome"
-									>${{ city.medianIncome }}</field
-								>
+									>${{ (city.medianIncome).toLocaleString('en-US', {valute: 'USD'})  }}
+									<span v-if="city.medianIncome > 250000">- The median household incomes that are above $250,000 are listed as $250,001 since the census lists them as "$250,000+". It may be misleading since some of these cities (there are only 6 of them in California) have average household incomes close to $500,000.</span>
+								</field>
 							</div>
 						</div>
 
@@ -272,7 +273,7 @@
 								<div>
 									This city's housing element is due in:
 									<p style="text-align: center">
-										<span id="element-due-days">{{ city.dueDaysLeft }}</span>
+										<span id="element-due-days">{{ (city.dueDaysLeft).toLocaleString() }}</span>
 										days
 									</p>
 								</div>
@@ -281,17 +282,18 @@
 									On: {{ city.dueDate.toDateString() }}
 								</div>
 
+								<br />
 								<div v-if="city.HEStatus == 'IN'">
-									The housing element is in compliance
+									The housing element is <b>in</b> compliance
 								</div>
 								<div v-if="city.HEStatus == 'OUT'">
-									The housing element is out of compliance
+									The housing element is <b>out</b> of compliance
 								</div>
 								<div v-if="city.HEStatus == 'DUE'">
-									The housing element is out of compliance
+									The housing element is <b>out</b> of compliance
 								</div>
 								<div v-if="city.HEStatus == 'CONDITIONAL'">
-									The housing element is approved, conditional on certain
+									The housing element is approved, <b>conditional</b> on certain
 									checkpoints or criteria being met.
 								</div>
 							</div>
@@ -303,14 +305,14 @@
 									title="6th Cycle Regional Housing Needs Allocation"
 									v-bind:value="city.rhna6"
 								>
-									{{ city.rhna6 }} units
+									{{ (city.rhna6).toLocaleString() }} units
 								</field>
 								<br />
 								<field
 									title="5th Cycle Regional Housing Needs Allocation"
 									v-bind:value="city.rhna5"
 								>
-									{{ city.rhna5 }} units
+									{{ (city.rhna5).toLocaleString() }} units
 								</field>
 								<br />
 								<div>
@@ -405,15 +407,24 @@
 										</li>
 									</ul>
 								</div>
+								
+								
 								<div>
 									Reports from recent meetings:
-									<ul>
-										<li v-for="report in city.meetingReports" :key="report.id">
-											<a @click="openModal(report.report)"
-												>{{ report.report | truncate }}</a
-											>
-										</li>
-									</ul>
+									<div v-if="Array.isArray(city.report)">
+										<ul>
+											<li v-for="report in city.report" :key="report.id">
+												<a @click="openModal(report)"
+													>{{ report | truncate }}</a
+												>
+											</li>
+										</ul>
+									</div>
+									<div v-if="!Array.isArray(city.report)">
+										<a @click="openModal(city.report)"
+											>{{ city.report | truncate }}</a
+										>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -59,17 +59,6 @@
           delete this.city.calendarIds
         })
       }
-
-      if (this.city.meetingReportIDs) {
-        Promise.all(
-          this.city.meetingReportIDs.map((meetingReportID) =>
-            base('Reports').find(meetingReportID)
-          )
-        ).then((reports) => {
-          this.city.meetingReports = reports.map(normalizeReportRecord)
-          delete this.city.meetingReportIDs
-        })
-      }
     },
     methods: {
       openModal(data) {
@@ -171,13 +160,13 @@
       li: 'LI',
       mi: 'MI',
       medianIncome: 'Median Income',
-      population: 'Population (2010)',
+      population: 'Population (2020)',
       progress: '5th Cycle Progress %',
       rhna5: '5th Cycle RHNA (Total)',
       rhna6: '6th Cycle RHNA',
       sixthElementDraftUrl: '6th Cycle Draft',
       vli: 'VLI',
-      meetingReports: 'MtgReport_display',
+      report: 'MtgReport_display'
     }
 
     for (key in fields) {
@@ -213,9 +202,6 @@
     fields.calendarIds = record.fields.Calendar
     fields.calendars = []
 
-    fields.meetingReportIDs = record.fields['Mtg Reports']
-    fields.meetingReports = []
-
     fields.id = record.id
     return fields
   }
@@ -236,23 +222,6 @@
     }
 
     fields.date = new Date(fields.date)
-
-    fields.id = record.id
-    return fields
-  }
-
-  function normalizeReportRecord(record) {
-    const fields = {
-      report: 'Report',
-    }
-
-    for (key in fields) {
-      let value = record.fields[fields[key]]
-      if (Array.isArray(value) && value.length == 1) {
-        value = value[0]
-      }
-      fields[key] = value
-    }
 
     fields.id = record.id
     return fields
