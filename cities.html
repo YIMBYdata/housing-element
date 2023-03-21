@@ -421,9 +421,13 @@
 										</ul>
 									</div>
 									<div v-if="!Array.isArray(city.report)">
-										<a @click="openModal(city.report)"
-											>{{ city.report | truncate }}</a
-										>
+										<ul>
+											<li>
+												<a @click="openModal(city.report)"
+													>{{ city.report | truncate }}</a
+												>
+											</li>
+										</ul>
 									</div>
 								</div>
 							</div>
